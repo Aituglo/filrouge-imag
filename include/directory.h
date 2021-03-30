@@ -9,6 +9,8 @@
 */
 struct dir;
 
+uint32_t dir_size(struct dir *dir);
+
 /*
   Crée un nouvel annuaire contenant _len_ listes vides.
 */

@@ -5,13 +5,81 @@
 #include <contact.h>
 #include <hash.h>
 
+struct dir{
+  uint32_t len;
+  struct contact *listes[];
+};
+
+struct contact {
+    const char *name;
+    char *tel;
+    struct contact *suiv;
+};
+
+/*
+  Renvoie le nombre de contact de l'annuaire
+*/
+uint32_t dir_size(struct dir *dir){
+  uint32_t k = 0;
+
+  for(uint32_t i = 0; i < dir->len; i++){
+    k += taille_contact(dir->listes[i]);
+  }
+
+  return k;
+}
+
+
 /*
   Crée un nouvel annuaire contenant _len_ listes vides.
 */
 struct dir *dir_create(uint32_t len)
 {
     (void)len;
-    return NULL;
+
+    // TODO : Trouver la bonne taille pour l'allocution
+    struct dir *directory = malloc(sizeof(uint32_t) + len*sizeof(struct contact));
+
+    directory->len = len;
+
+    for(uint32_t i = 0; i < len; i++){
+      directory->listes[i] = NULL;
+    }
+
+    return directory;
+}
+
+void dir_increase(struct dir *dir){
+  uint32_t current_size = dir->len;
+  uint32_t new_size = current_size * 2;
+
+  struct dir *new_dir = dir_create(new_size);
+
+  for(uint32_t i = 0; i < dir->len; i++){
+    change_contact_dir(dir->listes[i], new_dir->listes, new_size);
+  }
+
+  dir->len = new_size;
+  *dir->listes = new_dir->listes;
+  
+}
+
+void dir_decrease(struct dir *dir){
+  uint32_t current_size = dir->len;
+  uint32_t new_size = current_size / 2;
+
+  if (new_size < 10){
+    new_size = 10;
+  }
+
+  struct dir *new_dir = dir_create(new_size);
+
+  for(uint32_t i = 0; i < dir->len; i++){
+    change_contact_dir(dir->listes[i], new_dir->listes, new_size);
+  }
+
+  dir->len = new_size;
+  *dir->listes = new_dir->listes;
 }
 
 /*
@@ -25,7 +93,11 @@ char *dir_insert(struct dir *dir, const char *name, const char *num)
     (void)dir;
     (void)name;
     (void)num;
-    return NULL;
+      
+    uint32_t key = hash(name) % dir->len;
+    
+    return inserer_contact(&dir->listes[key], name, num);
+  
 }
 
 /*
@@ -36,7 +108,10 @@ const char *dir_lookup_num(struct dir *dir, const char *name)
 {
     (void)dir;
     (void)name;
-    return NULL;
+
+    uint32_t key = hash(name) % dir->len;
+
+    return lookup_contact(&dir->listes[key], name);
 }
 
 /*
@@ -47,6 +122,11 @@ void dir_delete(struct dir *dir, const char *name)
 {
     (void)dir;
     (void)name;
+
+    uint32_t key = hash(name) % dir->len;
+
+    delete_contact(&dir->listes[key], name);
+
 }
 
 /*
@@ -55,6 +135,12 @@ void dir_delete(struct dir *dir, const char *name)
 void dir_free(struct dir *dir)
 {
     (void)dir;
+    for(uint32_t i = 0; i < dir->len; i++){
+      free_contacts(&dir->listes[i]);
+    }
+
+    free(dir);
+
 }
 
 /*
@@ -63,4 +149,18 @@ void dir_free(struct dir *dir)
 void dir_print(struct dir *dir)
 {
     (void)dir;
+
+    uint32_t contacts_size = dir_size(dir);
+
+    if((float) contacts_size > 0.75 * dir->len){
+      dir_increase(dir);
+    }else if ((float) contacts_size < 0.15 * dir->len ){
+      dir_decrease(dir);
+    }
+
+    for(uint32_t i = 0; i < dir->len; i++){
+      printf("Contacts dans la liste %u : \n", i);
+      afficher_contacts(dir->listes[i]);
+    }
+    printf("\n\n");
 }
