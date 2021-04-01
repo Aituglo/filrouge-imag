@@ -11,6 +11,8 @@ struct contact;
 
 char *inserer_contact(struct contact **con, const char *name, char *tel);
 
+size_t get_cell_size();
+
 char *lookup_contact(struct contact **con, const char *name);
 
 void afficher_contacts(struct contact *c);

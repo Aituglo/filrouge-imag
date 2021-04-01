@@ -25,6 +25,10 @@ uint32_t taille_contact(struct contact *c){
     return k;
 }
 
+size_t get_cell_size(){
+    return sizeof(struct contact);
+}
+
 void change_contact_dir(struct contact *c, struct contact **new_con[], uint32_t new_size){
 
     while (c != NULL) {

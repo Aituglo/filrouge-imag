@@ -10,12 +10,6 @@ struct dir{
   struct contact *listes[];
 };
 
-struct contact {
-    const char *name;
-    char *tel;
-    struct contact *suiv;
-};
-
 /*
   Renvoie le nombre de contact de l'annuaire
 */
@@ -38,7 +32,7 @@ struct dir *dir_create(uint32_t len)
     (void)len;
 
     // TODO : Trouver la bonne taille pour l'allocution
-    struct dir *directory = malloc(sizeof(uint32_t) + len*sizeof(struct contact));
+    struct dir *directory = malloc(sizeof(uint32_t) + len*get_cell_size());
 
     directory->len = len;
 
