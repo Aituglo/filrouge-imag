@@ -22,7 +22,7 @@ extern struct dir *dir_create(uint32_t len);
   numéro est remplacé et la fonction retourne une copie de l'ancien numéro.
   Sinon, la fonction retourne NULL.
 */
-extern char *dir_insert(struct dir *dir, const char *name, const char *num);
+extern char *dir_insert(struct dir *dir, const char *name, char *num);
 
 /*
   Retourne le numéro associé au nom _name_ dans l'annuaire _dir_. Si aucun

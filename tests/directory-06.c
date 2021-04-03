@@ -20,6 +20,7 @@ int main(void)
     dir_insert(dir, "Commandant Cornichon", "08444444444");
     dir_print(dir);
     dir_insert(dir, "Général Motors", "99444444444");
+    dir_insert(dir, "Jean Louis Roch", "23444444444");
     dir_print(dir);
     dir_free(dir);
 

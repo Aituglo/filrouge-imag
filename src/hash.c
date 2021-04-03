@@ -3,7 +3,6 @@
 
 uint32_t hash(const char *str)
 {
-    (void)str;
 
     uint32_t hash = 5381;
     uint32_t i = 0;
