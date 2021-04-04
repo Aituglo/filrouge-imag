@@ -54,7 +54,8 @@ void dir_increase(struct dir *dir){
     change_contact_dir(dir->listes[i], new_dir->listes, new_size);
   }
 
-  *dir = *new_dir;
+  dir->len = new_size;
+  dir_copie(dir, new_dir, new_size);
 
 }
 
@@ -72,7 +73,8 @@ void dir_decrease(struct dir *dir){
     change_contact_dir(dir->listes[i], new_dir->listes, new_size);
   }
 
-  *dir = *new_dir;
+  dir->len = new_size;
+  dir_copie(dir, new_dir, new_size);
 
 }
 
@@ -132,6 +134,12 @@ void dir_delete(struct dir *dir, const char *name)
 
   delete_contact(&dir->listes[key], name);
 
+}
+
+void dir_copie(struct dir *previous_dir, struct dir *new_dir, uint32_t size){
+  for(uint32_t i = 0; i < size; i++){
+    previous_dir->listes[i] = new_dir->listes[i];
+  }
 }
 
 /*

@@ -36,6 +36,8 @@ extern const char *dir_lookup_num(struct dir *dir, const char *name);
 */
 extern void dir_delete(struct dir *dir, const char *name);
 
+extern void dir_copie(struct dir *previous_dir, struct dir *new_dir, uint32_t size);
+
 /*
   Libère la mémoire associée à l'annuaire _dir_.
 */
