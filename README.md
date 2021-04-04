@@ -12,7 +12,7 @@ Si tu veux lancer la compilation tu as simplement à lancer la commande suivante
 
 Quand c'est fait, tu as tout généré comme il faut !
 
-Ensuite tu peux tester mon code avec les différents tests qui son dans le dossier tests
+Ensuite tu peux tester mon code avec les différents tests qui sont dans le dossier tests
 
 Tu peux les lancer simplement en allant dans ce dossier et en les lançant, par exemple : 
 
