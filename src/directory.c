@@ -44,6 +44,9 @@ struct dir *dir_create(uint32_t len)
     return directory;
 }
 
+/*
+  Effectue un agrandissement d'un annuaire
+*/
 void dir_increase(struct dir *dir){
   uint32_t current_size = dir->len;
   uint32_t new_size = current_size * 2;
@@ -59,6 +62,9 @@ void dir_increase(struct dir *dir){
 
 }
 
+/*
+  Effectue un rétrécissement d'un annuaire
+*/
 void dir_decrease(struct dir *dir){
   uint32_t current_size = dir->len;
   uint32_t new_size = current_size / 2;
@@ -129,13 +135,15 @@ void dir_delete(struct dir *dir, const char *name)
     dir_decrease(dir);
   }
   
-
   uint32_t key = hash(name) % dir->len;
 
   delete_contact(&dir->listes[key], name);
 
 }
 
+/*
+  Fait une copie d'un dir dans un autre
+*/
 void dir_copie(struct dir *previous_dir, struct dir *new_dir, uint32_t size){
   for(uint32_t i = 0; i < size; i++){
     previous_dir->listes[i] = new_dir->listes[i];
@@ -161,6 +169,7 @@ void dir_free(struct dir *dir)
 */
 void dir_print(struct dir *dir)
 {
+    printf("-- Affichage de l'annuaire --\n");
     for(uint32_t i = 0; i < dir->len; i++){
       printf("Contacts dans la liste %u : \n", i);
       afficher_contacts(dir->listes[i]);

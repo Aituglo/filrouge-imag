@@ -14,6 +14,9 @@ struct contact {
     struct contact *suiv;
 };
 
+/*
+  Renvoie la taille d'une la liste
+*/
 uint32_t taille_contact(struct contact *c){
 
     uint32_t k = 0;
@@ -25,10 +28,16 @@ uint32_t taille_contact(struct contact *c){
     return k;
 }
 
+/*
+  Renvoie la taille d'un contact
+*/
 size_t get_cell_size(){
     return sizeof(struct contact);
 }
 
+/*
+  Change tous les contacts d'une liste dans un autre annuaire
+*/
 void change_contact_dir(struct contact *c, struct contact *new_con[], uint32_t new_size){
 
     while (c != NULL) {
@@ -36,9 +45,11 @@ void change_contact_dir(struct contact *c, struct contact *new_con[], uint32_t n
         inserer_contact(&new_con[key], c->name, c->tel);
         c = c->suiv;
     }
-
 }
 
+/*
+  Insère un contact
+*/
 char *inserer_contact(struct contact **con, const char *name, char *tel)
 {
     struct contact sent = { "", "", *con };
@@ -70,6 +81,9 @@ char *inserer_contact(struct contact **con, const char *name, char *tel)
     return NULL;
 }
 
+/*
+  Cherche un contact et le renvoie
+*/
 char *lookup_contact(struct contact **con, const char *name){
 
     struct contact sent = { "", "", *con };
@@ -86,6 +100,9 @@ char *lookup_contact(struct contact **con, const char *name){
     return NULL;
 }
 
+/*
+  Free une liste chainé
+*/
 void free_contacts(struct contact **con)
 {
     struct contact sent = { "", "", *con };
@@ -102,6 +119,9 @@ void free_contacts(struct contact **con)
     }
 }
 
+/*
+  Supprime un contact
+*/
 void delete_contact(struct contact **con, const char *name)
 {
 
@@ -125,6 +145,9 @@ void delete_contact(struct contact **con, const char *name)
     *con = sent.suiv;
 }
 
+/*
+  Permet d'afficher les contacts d'une liste chainé
+*/
 void afficher_contacts(struct contact *c)
 {
     while (c != NULL) {

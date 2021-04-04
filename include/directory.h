@@ -9,6 +9,9 @@
 */
 struct dir;
 
+/*
+  Récupère la taille d'un annuaire
+*/
 uint32_t dir_size(struct dir *dir);
 
 /*
@@ -31,11 +34,24 @@ extern char *dir_insert(struct dir *dir, const char *name, char *num);
 extern const char *dir_lookup_num(struct dir *dir, const char *name);
 
 /*
+  Effectue un agrandissement d'un annuaire
+*/
+extern void dir_increase(struct dir *dir);
+
+/*
+  Effectue un rétrécissement d'un annuaire
+*/
+extern void dir_decrease(struct dir *dir);
+
+/*
   Supprime le contact de nom _name_ de l'annuaire _dir_. Si aucun contact ne
   correspond, ne fait rien.
 */
 extern void dir_delete(struct dir *dir, const char *name);
 
+/*
+  Fait une copie d'un dir dans un autre
+*/
 extern void dir_copie(struct dir *previous_dir, struct dir *new_dir, uint32_t size);
 
 /*
